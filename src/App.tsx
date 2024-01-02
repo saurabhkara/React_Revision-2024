@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { useState } from "react";
 
+const playerData = {
+  A: "0",
+  B: "1",
+};
+
+const playerMoves = {
+  [playerData.A]: "",
+  [playerData.B]: "",
+};
+
+const WINING_COND = ["012", "345", "678", "036", "147", "258", "048", "642"];
 function App() {
-  const [count, setCount] = useState(0)
+  const [player, setPlayer] = useState(playerData.A);
+  const [prevMoves, setPrevMoves] = useState({ ...playerMoves });
+  const [won, setWon] = useState<string | null>(null);
+
+  function isWinCheck(winStr: string) {
+    const isWin = WINING_COND.some((win) => {
+      return winStr.split("").sort().join("").includes(win);
+    });
+    return isWin;
+  }
+
+  function handleClick(e) {
+    const whichPlayer = e?.target?.dataset?.playerType;
+    const whichMove = e?.target?.dataset?.moveId;
+    const togglePlayer =
+      whichPlayer === playerData.A ? playerData.B : playerData.A;
+    const prev = { ...prevMoves };
+    prev[whichPlayer] = `${prev[whichPlayer]}${whichMove}`;
+
+    if (isWinCheck(prev[player])) {
+      setWon(player);
+      setPlayer(playerData.A);
+      setPrevMoves({ ...playerMoves });
+    } else {
+      setPlayer(togglePlayer);
+      setPrevMoves(prev);
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <h3>Tic Tac Toe</h3>
+      <h4>Next Move {player === "0" ? "A" : "B"} Player</h4>
+      <div className="board" onClick={handleClick}>
+        {Array.from(new Array(9)).map((_, index) => {
+          let mark = "";
+          if (prevMoves[playerData.A].includes(`${index}`)) {
+            mark = "X";
+          } else if (prevMoves[playerData.B].includes(`${index}`)) {
+            mark = "O";
+          }
+
+          return (
+            <button
+              className="btn"
+              key={index}
+              data-player-type={player}
+              data-move-id={index}
+            >
+              <p>{mark}</p>
+            </button>
+          );
+        })}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <h3>{won ? `Game won by ${player}` : " "}</h3>
+    </div>
+  );
 }
 
-export default App
+export default App;
+// console.log(App());a
