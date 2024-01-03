@@ -6,21 +6,63 @@
   height: 90vh;
   width: 100vw;
 }
-.board {
-  display: block;
+.title {
+  align-self: center;
+  color: white;
+  font-size: 25px;
+}
 
-  height: 300px;
-  width: 300px;
+.reset {
+  cursor: pointer;
+  color: #26ffcb;
+  outline: none;
+  border: none;
+  border-radius: 50px;
+  padding: 10px;
+  background-color: #1f3540;
+  width: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.reset:hover {
+  background-color: cyan;
+  color: black;
+}
+.board {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  height: 320px;
+  width: 320px;
+  padding: 5px;
+  justify-content: space-around;
+  align-items: center;
   background-color: rgb(198, 255, 255);
 }
-.btn {
+
+.square-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100px;
   width: 100px;
-  background-color: rgb(255, 164, 164);
-  border: 1px;
-  border-color: brown;
+  border-radius: 15px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #1f3540;
+  margin: 2px;
+}
+.img-container {
+  height: 80px;
+  width: 80px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  /* background-color: red; */
 }
 
-.btn:hover {
-  background-color: rgb(245, 112, 112);
+.clicked-img {
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
 }
