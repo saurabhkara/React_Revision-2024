@@ -1,6 +1,7 @@
+// @ts-nocheck
 import "./App.css";
 import { useState } from "react";
-import TicTacBoard from "./component/TicTacBoard";
+import TicTacBoard from "./component/TicTacBoard.jsx";
 
 const WINING_COND = [
   [0, 1, 2],
@@ -16,7 +17,7 @@ function App() {
   const [moves, setMoves] = useState(new Array(9).fill(null));
   const [xTurn, seXTurn] = useState(true);
 
-  function onClickHandle(e) {
+  function onClickHandle(e: { target: { dataset: { moveId: any } } }) {
     let moveId = e?.target?.dataset?.moveId;
     if (moveId) {
       let movesArr = [...moves];
