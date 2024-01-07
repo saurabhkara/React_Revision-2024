@@ -19,6 +19,9 @@ function App() {
 
   function onClickHandle(e: { target: { dataset: { moveId: any } } }) {
     let moveId = e?.target?.dataset?.moveId;
+    if (moves[moveId]) {
+      return;
+    }
     if (moveId) {
       let movesArr = [...moves];
       movesArr[moveId] = xTurn ? "x" : "o";
